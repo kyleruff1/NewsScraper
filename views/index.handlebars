@@ -1,0 +1,125 @@
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Mongo Scraper Here</a>
+    </div>
+    <ul class="nav navbar-nav">
+      <li class="active home"><a href="/">Home</a></li>
+      <li class="active saved"><a href="/saved">Saved Articles</a></li>
+      <li class="active scrape"><a href="/scrape" class="btn btn-danger scrape-new">Scrape New Articles!</a></li>
+    </ul>
+  </div>
+</nav>
+
+
+<div class="jumbotron text-center">
+  <div class="overlay"></div>
+      <div class="background-image"></div>
+
+        <div class="caption">
+          <h1>{{title}} </h1>
+            <p>New York Times Edition</p>
+          </div>
+      </div>
+
+
+<div class="container-fluid article-container">
+
+  <div class="row">
+     {{#each result}}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3> 
+              <a href="{{this.link}}" style="color: #fff">
+                  {{this.headline}}
+                </a>
+            </h3>
+          </div>
+          <div class="panel-body">
+            {{this.summary}}
+          </div>
+          <div class="panel-footer">
+            <button class="btn btn-primary save-article" id="saved"><a href="/save" style="color: #fff" data-behaviour="savedModal" data-title="Saved Article" data-headline="{{this.headline}}" data-summary="{{this.summary}}" data-link="{{this.link}}">Save Article</a></button>
+          </div>
+        </div>
+     {{/each}} 
+  </div>
+
+
+<div class="container-fluid article-container">
+
+  <div class="row">
+     {{#each saved}}
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+            <h3 > 
+              <a href="{{this.link}}" style="color: #fff">
+                  {{this.headline}}
+                </a>
+            </h3>
+          </div>
+          <div class="panel-body">
+            {{this.summary}}
+          </div>
+          <div class="panel-footer">
+            <button id="note"><a href="/note/{{this._id}}" style="color: #fff" data-behaviour="notesModal" data-title="Article Note" data-content=""><button type="submit" class="btn btn-primary" data-text="{{this.note}}">Article Note</a></button>
+            <button id="delete"><a href="/delete/{{this._id}}" style="color: #fff" data-behaviour="deleteModal" data-title="Delete Note" data-content=""><button type="submit" class="btn btn-danger" data-text="{{this.note}}">Delete From Saved </a></button>       
+          </div>
+        </div>
+     {{/each}} 
+  </div>
+
+
+
+
+<div id="modal" class="savedModal">
+  <div class="modal-body">
+    <ul>
+      {{#each result}}
+      <li>
+        <p>
+          <h2>"This article has been saved!</h2>
+          <button type="submit" data-planid="{{this.id}}" class="new">Saved Article</button>
+        </p>
+      </li>
+      {{/each}}
+    </ul>
+</div>
+
+<div id="modal" class="notesModal">
+  <div class="modal-body">
+    <ul>
+      {{#each note}}
+      <li>
+        <p>
+          {{this.id}}. {{this.text}}
+          <button type="submit" data-planid="{{this.id}}" class="new">Article Note</button>
+        </p>
+      </li>
+      {{/each}}
+    </ul>
+</div>
+
+<div id="modal" class="deleteModal">
+  <div class="modal-body">
+      <ul>
+        {{#each note}}
+          <li>
+            <p>
+            {{this.id}}. {{this.text}}
+            <button type="submit" data-planid="{{this.id}}" class="delete">Delete From Saved </button>
+          </p>
+        </li>
+      {{/each}}
+    </ul>
+  </div>
+</div>
+
+
+</div>
+
+<footer class="footer">
+  <div class="container">
+    <p>New York Times Mongoose Express Cheerio Web Scraper</p>
+  </div>
+</footer>
