@@ -64,7 +64,7 @@ router.get("/scrape", function(req, res) {
         console.log("after new-entry to db")
       });
 
-      res.send('index', {
+      res.render('index', {
           title: 'Scraped Articles',
           result
       })
